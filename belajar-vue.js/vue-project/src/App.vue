@@ -1,38 +1,66 @@
-<script setup>
-import { ref } from 'vue'
+<template>
+  <div>
+    <h2>Formulir</h2>
+    <form @submit.prevent="submitForm">
+      <label for="">Nama</label>
+      <input type="text" v-model="kontak.nama" :class="{ 'is-invalid': isInvalidName }" required>
+      <div v-if="isInvalidName" class="error-message">Nama harus isi disini</div>
+      <br>
+      <label for="">Email</label>
+      <input type="email" v-model="kontak.email" :class="{ 'is-invalid': isInvalidEmail }" required>
+      <div v-if="isInvalidEmail" class="error-message">Email harus isi disini</div>
+      <br>
+      <button type="submit">Simpan</button>
+    </form>
+    <div v-if="showResult">
+      nama : {{ name }} <br>
+      email : {{ email }}
+    </div>
+  </div>
+</template>
 
-const msg = ref ("hello world")
-const rawHtml = ref ("<li> portal masuk isekai </li>")
+<script>
+import { ref } from 'vue';
 
-let  a = 10;
-let b = 5;
-let c = a + b;
-let d = a - b;
-let e = a / b;
-let f = a * b;
-
+export default {
+  data() {
+    return {
+      kontak: {
+        nama: '',
+        email: '',
+      },
+      showResult: ref(false),
+      name: ref(''),
+      email: ref(''),
+    };
+  },
+  methods: {
+    submitForm() {
+      this.name = this.kontak.nama;
+      this.email = this.kontak.email;
+      this.showResult = true;
+    },
+  },
+  computed: {
+    isInvalidName() {
+      return this.name.length < 1;
+    },
+    isInvalidEmail() {
+      return this.email.length < 1;
+    },
+  },
+};
 </script>
 
-<template>
-  <div id="app">
-  <span>{{ msg }}</span> <br>
-  <span v-html="rawHtml"></span>
-  <div>yakin akan masuk ? {{ }}</div>
-
-<input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
-<label for="jack"> masuk </label><br>
-
-<input type="checkbox" id="john" value="John" v-model="checkedNames">
-<label for="john"> keluar </label><br>
-<button v-bind:disabled="isButtonDisabled" onclick="alert('berhasil masuk isekai, menikahlah dengan gojo')"> start </button>
-<br>
-
-bil1 = {{ a }} <br>
-bil2 = {{ b }} <br>
-hasil = b1 + b2 = {{ c }} <br>
-hasil = b1 - b2 = {{ d }} <br>
-hasil = b1 / b2 = {{ e }} <br>
-hasil = b1 * b2 = {{ f }}
-  </div>
-
-</template> 
+<style>
+h2 {
+  color: rgb(0, 0, 0);
+}
+.error-message {
+  color: red;
+  margin-top: 5px;
+}
+.is-invalid {
+  border-color: red;
+}
+</style>
