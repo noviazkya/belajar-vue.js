@@ -1,78 +1,48 @@
 <template>
   <div>
-    <h2>Formulir siswa</h2>
-    <form @submit.prevent="submitForm"> 
-    <label for="">Nama</label>
-    <input type="text" v-model="siswa.nama"><br>
-    <label for="">Kelas</label>
-    <input type="text" v-model="siswa.kelas"><br>
-    <label for="">Alamat</label>
-    <textarea v-model="siswa.alamat" cols="20" rows="5"></textarea><br>
-    <label for="">nilai matematika</label>
-    <input type="number" v-model="siswa.mtk" id="mtk"><br>
-    <label for="">nilai b.indonesia</label>
-    <input type="number" v-model="siswa.bhs" id="bhs"><br>
-    <label for="">nilai ipa</label>
-    <input type="number" v-model="siswa.ipa" id="ipa"><br>
-    <button type="submit">Simpan</button>
-    </form>
-    <div v-if="showResult">
-      nama : {{ name }} <br>
-      kelas : {{ kelas }} <br>
-      alamat : {{ alamat }}<br>
-      nilaiMtk: {{ mtk }}<br>
-      nilaibhs: {{ bhs }}<br>
-      nilaiipa: {{ ipa }} <br>
-      Total nilai: {{ total }} <br>
-      keterangan: {{ keterangan }}
-    </div>
+    <header text = "ini adalah header "></header>
+    <!-- <h2> hallo ini adalah komponen utama </h2> -->
+    <my-component nama = "novi" umur = "17"></my-component>
+    <latihan-component name ="novi azkya" age ="20 "></latihan-component>
+    <latihan2-component></latihan2-component>
+    <whatchers-component nama ="novi" umur="18"></whatchers-component>
+    <event-component :nama="nama" :umur="umur" @greeted="onGreeted">
+      <template #footer>
+      <div>
+        <p> ini adalah footer event </p>
+      </div>
+    </template>
+    <template #header>
+      <div>
+        <p> ini adalah header event </p>
+      </div>
+    </template>
+    </event-component>
   </div>
 </template>
-<script>
+
+<script setup>
+import MyComponent from './components/MyComponent.vue';
+import Header from './components/Header.vue';
+import LatihanComponent from './components/LatihanComponent.vue';
+import Latihan2Component from './components/Latihan2Component.vue';
+import WhatchersComponent from './components/WhatchersComponent.vue';
+import EventComponent from './components/EventComponent.vue';
+
+// event
 import { ref } from 'vue';
+const nama = ref ('novi');
+const umur = ref (20);
 
-export default {
-// logika
-  
+const onGreeted = () => {
+  console.log ('kamu udah disapa bro !');
+};
 
-  data() {
-    return {
-    siswa: {
-     nama: '',
-     kelas: '',
-     alamat: '',
-     mtk: '',
-     bhs: '',
-     ipa: ''
-    },
-    showResult: ref(false),
-      name: ref(''),
-      kelas: ref(''),
-      alamat: ref(''),
-      mtk: ref(''),
-      bhs: ref(''),
-      ipa: ref(''),
-      total: 0,
-      keterangan : ref('')
-    };
-  },
-  methods: {
-    submitForm() {
-      this.name = this.siswa.nama;
-      this.kelas = this.siswa.kelas;
-      this.alamat = this.siswa.alamat;
-      this.mtk = this.siswa.mtk;
-      this.bhs = this.siswa.bhs;
-      this.ipa = this.siswa.ipa;
-      this.total = parseInt(this.mtk) + parseInt(this.bhs) + parseInt(this.ipa);
-      if (this.total > 240) {
-        this.keterangan = "lulus"
-      } else {
-        this.keterangan = "tidak lulus"
-      } 
-      this.showResult = true;
-    },
-    
-  },
-}
-</script>
+// export default {
+//   name : "App",
+//   components : {
+//     MyComponent,
+//     Header
+//   }
+// }
+</script> 
